@@ -1,0 +1,53 @@
+name: Feature request
+description: Propose a focused improvement to Java-RAG
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What concrete developer or user problem should this change solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the API, data flow, example, or behavior you would add.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Core RAG pipeline
+        - Parsing
+        - Chunking
+        - Embeddings
+        - Retrieval or reranking
+        - LLM provider
+        - Storage integration
+        - Evaluation or observability
+        - Documentation or demo
+        - Agent
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example usage
+      description: Show what the ideal Java API or command would look like.
+      render: java
+  - type: checkboxes
+    id: principles
+    attributes:
+      label: Project fit
+      options:
+        - label: The core remains usable without a mandatory application framework.
+          required: true
+        - label: The proposal can be covered by deterministic tests.
+          required: true
