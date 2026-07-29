@@ -62,6 +62,13 @@ RAG_PLAYGROUND_MODE=ollama docker compose --profile ollama up --build
 
 详细说明见 [Playground 使用与 API 文档](docs/PLAYGROUND.md)。
 
+<!-- playground-screenshot -->
+## 可视化 Playground
+
+![Java-RAG 可视化知识库、证据化问答与检索证据界面](docs/assets/playground.png)
+
+这张截图由 Playwright 验收测试自动生成：Docker Compose 启动真实应用后，浏览器加载示例文档、完成一次证据化问答，并校验右侧检索证据与回答引用一致。
+
 ## 为什么值得关注？
 
 - **有真正的前端产品界面**：知识库、问答和证据并排展示，而不是只有后端类和接口；
