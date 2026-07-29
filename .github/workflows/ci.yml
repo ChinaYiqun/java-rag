@@ -30,3 +30,6 @@ jobs:
 
       - name: Run Maven tests
         run: mvn --batch-mode --no-transfer-progress test
+
+      - name: Run no-API-key RAG demo
+        run: bash scripts/run-no-api-demo.sh
