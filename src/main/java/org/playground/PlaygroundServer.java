@@ -1,7 +1,6 @@
 package org.playground;
 
 import fi.iki.elonen.NanoHTTPD;
-import org.demo.local.ExtractiveChatService;
 import org.json.JSONObject;
 import org.parser.FileParserFactory;
 import org.service.LLM.ChatService;
@@ -137,7 +136,7 @@ public final class PlaygroundServer extends NanoHTTPD {
         if (message == null || message.trim().isEmpty()) {
             return exception.getClass().getSimpleName();
         }
-        return message.replaceAll("[\r\n]+", " ");
+        return message.replaceAll("[\\r\\n]+", " ");
     }
 
     private static boolean isBlank(String value) {
@@ -174,7 +173,7 @@ public final class PlaygroundServer extends NanoHTTPD {
             chatUrl = environment("RAG_OLLAMA_CHAT_URL", "http://localhost:11434/v1/chat/completions");
             model = environment("RAG_OLLAMA_MODEL", "qwen2.5:3b");
         } else if ("local".equals(mode)) {
-            chatService = new ExtractiveChatService();
+            chatService = new PlaygroundExtractiveChatService();
             chatUrl = "offline://extractive";
             model = "offline-extractive";
         } else {
