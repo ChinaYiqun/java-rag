@@ -1,18 +1,39 @@
-# Build and Release Folders
+# Maven / Java build outputs
+target/
+*.class
+*.jar
+*.war
+*.log
+
+# IDE files
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+
+# Local runtime configuration and secrets
+.env
+.env.*
+!.env.example
+*.local
+application-local.properties
+application-local.yml
+application-local.yaml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Legacy build and release folders
 bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
-
-# Other files and folders
-.settings/
 
 # Executables
 *.swf
 *.air
 *.ipa
 *.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
