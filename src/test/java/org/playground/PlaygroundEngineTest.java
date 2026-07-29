@@ -1,6 +1,5 @@
 package org.playground;
 
-import org.demo.local.ExtractiveChatService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -14,7 +13,7 @@ public class PlaygroundEngineTest {
     @Test
     public void returnsAnswerWithSourceMetadataAndScores() throws Exception {
         PlaygroundEngine engine = new PlaygroundEngine(
-                new ExtractiveChatService(),
+                new PlaygroundExtractiveChatService(),
                 "offline://extractive",
                 "offline-extractive",
                 "local",
@@ -48,7 +47,7 @@ public class PlaygroundEngineTest {
     @Test(expected = IllegalStateException.class)
     public void requiresDocumentsBeforeChat() throws Exception {
         PlaygroundEngine engine = new PlaygroundEngine(
-                new ExtractiveChatService(),
+                new PlaygroundExtractiveChatService(),
                 "offline://extractive",
                 "offline-extractive",
                 "local",
