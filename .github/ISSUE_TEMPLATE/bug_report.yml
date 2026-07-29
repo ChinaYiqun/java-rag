@@ -1,0 +1,54 @@
+name: Bug report
+description: Report reproducible incorrect behavior
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Java-RAG. Never include API keys, passwords, tokens, or private endpoints.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Include the smallest code sample, command, or repository link that reproduces the problem.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: java
+    attributes:
+      label: Java version
+      placeholder: "java -version"
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Java-RAG version or commit
+      placeholder: "master, tag, or commit SHA"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Redact all credentials and private infrastructure details.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I removed credentials and private endpoints from this report.
+          required: true
+        - label: I searched existing issues for the same problem.
+          required: true
