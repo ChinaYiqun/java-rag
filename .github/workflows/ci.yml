@@ -12,7 +12,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
 
     steps:
       - name: Check out repository
@@ -28,7 +28,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.19.0'
+          node-version: '22'
           cache: npm
           cache-dependency-path: frontend/package.json
 
@@ -49,3 +49,47 @@ jobs:
 
       - name: Validate Docker Compose
         run: docker compose config --quiet
+
+      - name: Start the full playground stack
+        run: docker compose up --build --detach
+
+      - name: Wait for browser and API readiness
+        run: |
+          for attempt in $(seq 1 90); do
+            if curl --fail --silent --show-error http://127.0.0.1:3000/api/health > /tmp/playground-health.json; then
+              cat /tmp/playground-health.json
+              exit 0
+            fi
+            sleep 2
+          done
+          echo 'Playground did not become ready.' >&2
+          docker compose logs --no-color
+          exit 1
+
+      - name: Install Playwright Chromium
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser acceptance test and capture screenshot
+        working-directory: frontend
+        run: npm run e2e
+
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playground-browser-evidence
+          if-no-files-found: ignore
+          retention-days: 30
+          path: |
+            docs/assets/playground.png
+            frontend/playwright-report
+            frontend/test-results
+
+      - name: Show container logs after failure
+        if: failure()
+        run: docker compose logs --no-color
+
+      - name: Stop playground stack
+        if: always()
+        run: docker compose down --volumes --remove-orphans
