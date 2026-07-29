@@ -5,6 +5,11 @@ target/
 *.war
 *.log
 
+# Frontend dependencies and build outputs
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
 # IDE files
 .idea/
 *.iml

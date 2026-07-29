@@ -1,0 +1,49 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.playground
+    environment:
+      RAG_PLAYGROUND_PORT: 8080
+      RAG_PLAYGROUND_TOP_K: ${RAG_PLAYGROUND_TOP_K:-4}
+      RAG_PLAYGROUND_MODE: ${RAG_PLAYGROUND_MODE:-local}
+      RAG_OLLAMA_CHAT_URL: ${RAG_OLLAMA_CHAT_URL:-http://ollama:11434/v1/chat/completions}
+      RAG_OLLAMA_MODEL: ${RAG_OLLAMA_MODEL:-qwen2.5:3b}
+    expose:
+      - "8080"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles:
+      - ollama
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
+    restart: unless-stopped
+
+  ollama-pull:
+    image: ollama/ollama:latest
+    profiles:
+      - ollama
+    depends_on:
+      - ollama
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      MODEL: ${RAG_OLLAMA_MODEL:-qwen2.5:3b}
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["sleep 6 && ollama pull $$MODEL"]
+    restart: "no"
+
+volumes:
+  ollama-data:
