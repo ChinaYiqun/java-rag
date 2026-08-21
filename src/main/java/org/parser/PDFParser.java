@@ -1,5 +1,6 @@
 package org.parser;
 
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
@@ -16,7 +17,7 @@ public class PDFParser implements FileParser{
      * @throws IOException 如果发生I/O错误
      */
     public  String parse(File file) throws IOException {
-        try (PDDocument document = PDDocument.load(file)) {
+        try (PDDocument document = Loader.loadPDF(file)) {
             PDFTextStripper pdfTextStripper = new PDFTextStripper();
             return pdfTextStripper.getText(document);
         }
